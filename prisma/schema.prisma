@@ -1,0 +1,35 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model user {
+  id               Int       @id @default(autoincrement())
+  email            String    @unique(map: "email") @db.VarChar(255)
+  password         String    @db.VarChar(255)
+  token            String?   @db.VarChar(255)
+  token_expiration DateTime? @db.Timestamp(0)
+}
+
+model character {
+  id       Int     @id @default(autoincrement())
+  imagen   String  @db.VarChar(255)
+  nombre   String  @db.VarChar(80)
+  edad     String  @db.VarChar(11)
+  peso     Float   @db.Float
+  historia String  @db.VarChar(255)
+  movies    movie[]
+}
+
+model movie {
+  id             Int         @id @default(autoincrement())
+  imagen         String      @db.VarChar(255)
+  titulo         String      @db.VarChar(80)
+  calificacion   Float       @db.Float
+  fecha_creacion DateTime    @default(now()) @db.Timestamp(0)
+  characters      character[]
+}
