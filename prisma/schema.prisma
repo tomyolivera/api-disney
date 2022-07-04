@@ -22,7 +22,7 @@ model character {
   edad     String  @db.VarChar(11)
   peso     Float   @db.Float
   historia String  @db.VarChar(255)
-  movies    movie[]
+  movies   movie[]
 }
 
 model movie {
@@ -31,5 +31,5 @@ model movie {
   titulo         String      @db.VarChar(80)
   calificacion   Float       @db.Float
   fecha_creacion DateTime    @default(now()) @db.Timestamp(0)
-  characters      character[]
+  characters     character[]
 }

@@ -1,8 +1,8 @@
 import { Router } from 'express'
-import Middleware from '../Controllers/Middleware'
 const MovieRoutes = Router()
 
 import MovieController from '../Controllers/MovieController'
+import Middleware from '../Controllers/Middleware'
 
 MovieRoutes.get('/', MovieController.getAll)
 MovieRoutes.post('/', Middleware.checkAuth, MovieController.create)

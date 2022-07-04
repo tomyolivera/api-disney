@@ -1,4 +1,3 @@
-import { Prisma } from '@prisma/client'
 import { Request, Response } from 'express'
 import { Messages } from '../Helpers'
 import prisma from '../Utils/database'
@@ -40,7 +39,7 @@ class MovieController {
         try {
             const fecha_creacion = new Date(req.body.fecha_creacion)
             const movie = await prisma.movie.create({ data: {...req.body, fecha_creacion} })
-            return res.json(movie)
+            return res.status(201).json(movie)
         }
         catch (error) {
             return res.status(500).json(error)

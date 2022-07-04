@@ -2,8 +2,6 @@ import { Request, Response } from 'express'
 import { Messages } from '../Helpers'
 import prisma from '../Utils/database'
 
-type FilterSearch = "edad" | "nombre" | "movietitle"
-
 class CharacterController {
     static async getAll(req: Request, res: Response): Promise<Response>
     {
