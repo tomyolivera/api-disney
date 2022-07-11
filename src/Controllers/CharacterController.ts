@@ -45,26 +45,28 @@ class CharacterController {
         }
     }
 
+    static async createRandom(req: Request, res: Response): Promise<Response>
+    {
+        const { data } = await axios.get("https://api.disneyapi.dev/characters")
+        data.data.forEach(async (element: any) => {
+            var character = {} as ICharacter
+            var i = {} as any
+            character.nombre = element.name
+            character.edad = (Math.floor(Math.random() * (60 - 30 + 1)) + 30 + '')
+            character.peso = Math.floor(Math.random() * (100 - 50 + 1)) + 50
+            character.historia = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+            character.imagen = element.imageUrl
+            i = character
+            console.log(i)
+            await prisma.character.create({
+                data: i
+            })
+        });
+        return res.json("Characters")
+    }
+
     static async create(req: Request, res: Response): Promise<Response>
     {
-        // const { data } = await axios.get("https://api.disneyapi.dev/characters")
-        // // random number between 30 and 60
-        // // lorem ipsum text generator https://www.lipsum.com/
-        // data.data.forEach(async (element: any) => {
-        //     var character = {} as ICharacter
-        //     var i = {} as any
-        //     character.nombre = element.name
-        //     character.edad = (Math.floor(Math.random() * (60 - 30 + 1)) + 30 + '')
-        //     character.peso = Math.floor(Math.random() * (100 - 50 + 1)) + 50
-        //     character.historia = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-        //     character.imagen = element.imageUrl
-        //     i = character
-        //     console.log(i)
-        //     await prisma.character.create({
-        //         data: i
-        //     })
-        // });
-        // return res.json("Characters")
         try {
             const character = await prisma.character.create({ data: {...req.body} })
             return res.status(201).json(character)
